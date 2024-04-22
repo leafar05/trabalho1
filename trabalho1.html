@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+
+    <script>
+
+        let indiceAtual = 0;
+
+        function adicionarImagem() {
+            const url = document.getElementById('urlImagem').value;
+            const descricao = document.getElementById('descricaoImagem').value;
+            const container = document.getElementById('containerImagens');
+
+            // Verifica se a URL da imagem foi fornecida
+            if (url == "") {
+                alert("Por favor, insira a URL da imagem para adicionar.");
+                return;
+            }
+
+            // Cria um novo elemento para a imagem e a descrição
+            let novaDiv = document.createElement('div');
+            novaDiv.className = 'imagem-carrossel';
+
+            // Adiciona a imagem ao carrossel
+            novaDiv.innerHTML = `<img src="${url}" alt="Imagem carrossel">`;
+
+            // Verifica se uma descrição foi fornecida e adiciona se presente
+            if (descricao) {
+                novaDiv.innerHTML += `<div class="descricao">${descricao}</div>`;
+            }
+
+            // Adiciona o novo elemento ao contêiner do carrossel
+            container.appendChild(novaDiv);
+
+            // Limpa os campos de entrada
+            document.getElementById('urlImagem').value = '';
+            document.getElementById('descricaoImagem').value = '';
+
+            // Atualiza o carrossel para mostrar a nova imagem
+            atualizarCarrossel();
+        }
+
+        function moverCarrossel(direcao) {
+            const container = document.getElementById('containerImagens');
+            const totalImagens = container.children.length;
+            indiceAtual += direcao;
+
+            if (indiceAtual >= totalImagens) {
+                indiceAtual = 0;
+            } else if (indiceAtual < 0) {
+                indiceAtual = totalImagens - 1;
+            }
+
+            container.style.transform = `translateX(${-100 * indiceAtual}%)`;
+        }
+
+        function atualizarCarrossel() {
+            const container = document.getElementById('containerImagens');
+            if (container.children.length > 1) {
+                container.style.transform = `translateX(${-100 * indiceAtual}%)`;
+            }
+        }
+        
+
+
+    </script>
+
+    <style>
+        img {
+            width: 100%;
+        }
+
+        html {
+            background-color: #d3d3d3;
+            font-family: 'Embed Code', arial;
+        }
+
+        .carrossel {
+            position: relative;
+            min-width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .container-imagem {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .imagem-carrossel {
+            max-width: 100vw;
+            min-width: 100%;
+            transition: transform 0.5s ease;
+            position: relative;
+        }
+
+        .descricao {
+            position: absolute;
+            bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .botao-carrossel {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 100;
+        }
+
+        .botao-carrossel:hover {
+            background-color: rgba(0, 0, 0, 1);
+        }
+
+        .botao-carrossel:first-child {
+            left: 0;
+        }
+
+        .botao-carrossel:last-child {
+            right: 0;
+        }
+
+        input {
+            border-radius: 5px;
+            box-shadow: 3px 3px 10px #333;
+            border: none;
+            width: 24em;
+            padding: .50em;
+            margin: .5em;
+        }
+
+        .Adicionar {
+            border-radius: 5px;
+            box-shadow: 3px 3px 10px #333;
+            border: none;
+            width: 25em;
+            padding: .50em;
+            margin: .5em;
+        }
+
+        body {
+            align-items: center;
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(65,105,225, 0.5);
+            margin-left: 30%;
+            margin-right: 30%;
+            border-radius: 1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="formulario">
+        <h2>Adicionar Imagem ao Carrossel</h2>
+        <input type="text" id="urlImagem" required placeholder="URL da imagem"><br>
+        <input type="text" id="descricaoImagem" required placeholder="Descrição da imagem"><br>
+        <button class="Adicionar" onclick="adicionarImagem()">Adicionar</button><br><br>
+    </div>
+
+    <div class="carrossel">
+        <button class="botao-carrossel" onclick="moverCarrossel(-1)">&#10094;</button>
+        <div class="container-imagem" id="containerImagens"></div>
+        <button class="botao-carrossel" onclick="moverCarrossel(1)">&#10095;</button>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
