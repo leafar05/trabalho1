@@ -8,11 +8,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
 
     <script>
-
         let indiceAtual = 0;
 
         function adicionarImagem() {
@@ -20,40 +20,39 @@
             const descricao = document.getElementById('descricaoImagem').value;
             const container = document.getElementById('containerImagens');
 
-            // Verifica se a URL da imagem foi fornecida
-            if (url == "") {
+            //verifica se a URL da imagem foi fornecida
+            if (url === "") {
                 alert("Por favor, insira a URL da imagem para adicionar.");
                 return;
             }
 
-            // Cria um novo elemento para a imagem e a descrição
+            //Cria um novo elemento para a imagem e a descrição
             let novaDiv = document.createElement('div');
             novaDiv.className = 'imagem-carrossel';
 
-            // Adiciona a imagem ao carrossel
+            //Adiciona a imagem ao carrossel
             novaDiv.innerHTML = `<img src="${url}" alt="Imagem carrossel">`;
 
-            // Verifica se uma descrição foi fornecida e adiciona se presente
+            //Verifica se uma descrição foi fornecida e adiciona se presente
             if (descricao) {
                 novaDiv.innerHTML += `<div class="descricao">${descricao}</div>`;
             }
 
-            // Adiciona o novo elemento ao contêiner do carrossel
+            //Adiciona o novo elemento ao conteiner do ar
             container.appendChild(novaDiv);
-
-            // Limpa os campos de entrada
             document.getElementById('urlImagem').value = '';
             document.getElementById('descricaoImagem').value = '';
 
-            // Atualiza o carrossel para mostrar a nova imagem
             atualizarCarrossel();
+            atualizarContador();
         }
 
         function moverCarrossel(direcao) {
             const container = document.getElementById('containerImagens');
             const totalImagens = container.children.length;
-            indiceAtual += direcao;
+            if (totalImagens === 0) return; // Não faz nada se não houver imagens
 
+            indiceAtual += direcao;
             if (indiceAtual >= totalImagens) {
                 indiceAtual = 0;
             } else if (indiceAtual < 0) {
@@ -61,22 +60,29 @@
             }
 
             container.style.transform = `translateX(${-100 * indiceAtual}%)`;
+            atualizarContador();
         }
 
         function atualizarCarrossel() {
             const container = document.getElementById('containerImagens');
-            if (container.children.length > 1) {
+            if (container.children.length > 0) {
                 container.style.transform = `translateX(${-100 * indiceAtual}%)`;
             }
         }
-        
 
-
+        function atualizarContador() {
+            const container = document.getElementById('containerImagens');
+            const counterDisplay = document.getElementById('counterDisplay');
+            const totalImagens = container.children.length;
+            counterDisplay.innerHTML = `${indiceAtual + 1} / ${totalImagens}`;
+        }
     </script>
+
 
     <style>
         img {
             width: 100%;
+            padding: 1em 0;
         }
 
         html {
@@ -153,6 +159,7 @@
             width: 25em;
             padding: .50em;
             margin: .5em;
+            box-sizing: content-box;
         }
 
         body {
@@ -163,10 +170,22 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: rgba(65,105,225, 0.5);
+            background-color: rgba(65, 105, 225, 0.5);
             margin-left: 30%;
             margin-right: 30%;
             border-radius: 1em;
+        }
+
+        .formulario input {
+            max-width: 80%;
+        }
+
+        .formulario button {
+            max-width: 79%;
+        }
+
+        h2 {
+            text-align: center;
         }
     </style>
 </head>
@@ -183,6 +202,7 @@
     <div class="carrossel">
         <button class="botao-carrossel" onclick="moverCarrossel(-1)">&#10094;</button>
         <div class="container-imagem" id="containerImagens"></div>
+        <span id="counterDisplay"></span>
         <button class="botao-carrossel" onclick="moverCarrossel(1)">&#10095;</button>
     </div>
 
