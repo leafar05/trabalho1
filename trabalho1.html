@@ -8,9 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
     <script>
         let indiceAtual = 0;
@@ -21,7 +19,7 @@
             const container = document.getElementById('containerImagens');
 
             //verifica se a URL da imagem foi fornecida
-            if (url === "") {
+            if (url == "") {
                 alert("Por favor, insira a URL da imagem para adicionar.");
                 return;
             }
@@ -40,10 +38,15 @@
 
             //Adiciona o novo elemento ao conteiner do ar
             container.appendChild(novaDiv);
+
+            //Limpa os campos de entrada
             document.getElementById('urlImagem').value = '';
             document.getElementById('descricaoImagem').value = '';
 
+            //Atualiza  o carrocel para mostrar a nova imagem
             atualizarCarrossel();
+
+            //Atualiza o contador em cada imagem
             atualizarContador();
         }
 
@@ -152,11 +155,11 @@
             margin: .5em;
         }
 
-        .Adicionar {
+        .adicionar {
             border-radius: 5px;
             box-shadow: 3px 3px 10px #333;
             border: none;
-            width: 25em;
+            width: 24em;
             padding: .50em;
             margin: .5em;
             box-sizing: content-box;
@@ -181,7 +184,7 @@
         }
 
         .formulario button {
-            max-width: 79%;
+            max-width: 80%;
         }
 
         h2 {
@@ -196,7 +199,7 @@
         <h2>Adicionar Imagem ao Carrossel</h2>
         <input type="text" id="urlImagem" required placeholder="URL da imagem"><br>
         <input type="text" id="descricaoImagem" required placeholder="Descrição da imagem"><br>
-        <button class="Adicionar" onclick="adicionarImagem()">Adicionar</button><br><br>
+        <button class="adicionar" onclick="adicionarImagem()">Adicionar</button><br><br>
     </div>
 
     <div class="carrossel">
